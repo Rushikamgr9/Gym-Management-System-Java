@@ -1,0 +1,22 @@
+#BlueJ class context
+comment0.target=RegularMember
+comment0.text=\r\n\ RegularMember\ class\ contains\ gym\ member\ with\ a\ regular\ membership\ for\ the\ Gym\ Management\ System.\r\n\ This\ class\ extends\ the\ abstract\ class\ GymMember\ and\ includes\ additional\ attributes\ such\ as\ membership\ plan,\ upgrade\ eligibility,\ referral\ source,\r\n\ and\ removal\ reason\ and\ methods\ for\ tracking\ attendance,\ upgrading\ membership\ plans,\ and\ resetting\ member\ details.\r\n\ \r\n\ @author\ Rushika\ Magar\r\n
+comment1.params=id\ name\ location\ phone\ email\ gender\ DOB\ membershipStartDate\ referralSource\ plan\ paidAmount
+comment1.target=RegularMember(int,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ java.lang.String,\ double)
+comment1.text=\r\n\ Constructor\ for\ RegularMember\ class.\r\n\ \r\n\ @param\ id\ contains\ the\ id\ of\ the\ regular\ member\r\n\ @param\ name\ contains\ the\ name\ of\ the\ regular\ menber\r\n\ @param\ location\ contains\ the\ location\ of\ the\ regular\ menber\r\n\ @param\ phone\ contains\ the\ phone\ number\ of\ the\ regular\ menber\r\n\ @param\ email\ contains\ the\ email\ address\ of\ the\ regular\ member\ \r\n\ @param\ gender\ contains\ the\ gender\ of\ the\ regular\ member\r\n\ @param\ DOB\ contains\ the\ date\ of\ birth\ of\ the\ regular\ member\r\n\ @param\ membershipStartDate\ contains\ the\ start\ date\ of\ regular\ member\r\n\ @param\ referralSource\ contains\ the\ referral\ source\ of\ regular\ member\r\n
+comment2.params=
+comment2.target=void\ markAttendance()
+comment2.text=\r\n\ Method\ to\ mark\ attendance\ for\ the\ regular\ member.\r\n\ Increase\ attendance\ count\ and\ loyalty\ points.\r\n\ Also\ checks\ if\ the\ member\ has\ become\ eligible\ for\ an\ upgrade.\r\n
+comment3.params=plan
+comment3.target=double\ getPlanPrice(java.lang.String)
+comment3.text=\r\n\ Method\ to\ get\ the\ price\ of\ a\ selected\ plan.\r\n\ @param\ plan\ contains\ the\ name\ of\ the\ plan\ choosen\ by\ the\ member.\r\n\ @return\ Price\ of\ the\ plan,\ or\ -1\ if\ the\ plan\ is\ invalid\r\n
+comment4.params=newPlan
+comment4.target=java.lang.String\ upgradePlan(java.lang.String)
+comment4.text=\r\n\ Method\ to\ upgrade\ the\ current\ membership\ plan\ to\ a\ new\ plan\ of\ a\ membership.\r\n\ @param\ newPlan\ contains\ the\ new\ plan\ to\ upgrade\ choosen\ by\ the\ member.\r\n\ @return\ A\ message\ indicating\ the\ result\ of\ the\ upgrade\ attempt\r\n
+comment5.params=removalReason
+comment5.target=void\ revertRegularMember(java.lang.String)
+comment5.text=\r\n\ Method\ to\ reset\ a\ regular\ member\ deatils\ upon\ removal.\r\n\ @param\ removalReason\ contains\ the\ reason\ for\ removal\ of\ the\ member\ from\ the\ system.\r\n
+comment6.params=
+comment6.target=void\ display()
+comment6.text=\r\n\ Method\ overrides\ parent\ class\ to\ display\ the\ details\ of\ members\ including\ plan\ and\ price.\r\n\ It\ also\ display\ if\ removal\ reason\ exists.\r\n
+numComments=7
