@@ -51,6 +51,43 @@ public class RegularMember extends GymMember {
             }
         }
     }
+    
+    
+    /**
+     * Method to get the price of a selected plan.
+     * @param plan contains the name of the plan choosen by the member.
+     * @return Price of the plan, or -1 if the plan is invalid
+     */
+    public double getPlanPrice(String plan) {
+        switch (plan.toLowerCase()) {
+            case "basic": return 6500;
+            case "standard": return 12500;
+            case "deluxe": return 18500;
+            default: return -1;
+        }
+    }
+    
+    /**
+     * Method to upgrade the current membership plan to a new plan of a membership.
+     * @param newPlan contains the new plan to upgrade choosen by the member.
+     * @return A message indicating the result of the upgrade attempt
+     */
+    public String upgradePlan(String newPlan) {
+        double newPrice = getPlanPrice(newPlan);
+        if (newPrice == -1) {
+            return "Invalid plan selected.";
+        }
+        if (!isEligibleForUpgrade) {
+            return "Member is not eligible for an upgrade.";
+        }
+        if (this.plan.equalsIgnoreCase(newPlan)) {
+            return "Already subscribed to this plan.";
+        }
+        this.plan = newPlan;
+        this.price = newPrice;
+        return "Plan upgraded successfully to " + newPlan;
+    }
+
 
     
    
