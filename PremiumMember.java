@@ -81,6 +81,24 @@ public class PremiumMember extends GymMember {
             loyaltyPoints += 10;
         }
     }
-    
-   
+
+    /**
+     * Method to pay due amount for a premium membership fee.
+     * @param amount contains the amount being paid.
+     * @return A message indicating the payment status or remaining amount
+     */
+    public String payDueAmount(double amount) {
+        if (isFullPayment) {
+            return "Payment is already completed.";
+        }
+        paidAmount += amount;
+        if (paidAmount > premiumCharge) {
+            return "Error: Paid amount exceeds premium charge.";
+        }
+        if (paidAmount == premiumCharge) {
+            isFullPayment = true;
+        }
+        return "Payment successful. Remaining amount: " + (premiumCharge - paidAmount);
+    }
+       
 }
