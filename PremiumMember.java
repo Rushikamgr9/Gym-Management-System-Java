@@ -100,5 +100,15 @@ public class PremiumMember extends GymMember {
         }
         return "Payment successful. Remaining amount: " + (premiumCharge - paidAmount);
     }
-       
+    
+    /**
+     * Method to calculate and displays the discount for a premium member.
+     * A 10% discount is applied only if full payment has been completed.
+     */
+    public void calculateDiscount() {
+        if (isFullPayment) {
+            discountAmount = 0.1 * premiumCharge;
+            System.out.println("Discount applied: " + discountAmount);
+        }
+    }
 }
