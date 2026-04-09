@@ -88,6 +88,19 @@ public class RegularMember extends GymMember {
         return "Plan upgraded successfully to " + newPlan;
     }
 
+    /**
+     * Method overrides parent class to display the details of members including plan and price.
+     * It also display if removal reason exists.
+     */
+    @Override
+    public void display() {
+        super.display();
+        System.out.println("Plan: " + plan + ", Price: " + price);
+        if (!removalReason.isEmpty()) {
+            System.out.println("Removal Reason: " + removalReason);
+        }
+    }
+
 
     
    
