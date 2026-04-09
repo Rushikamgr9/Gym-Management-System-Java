@@ -52,7 +52,6 @@ public class RegularMember extends GymMember {
         }
     }
     
-    
     /**
      * Method to get the price of a selected plan.
      * @param plan contains the name of the plan choosen by the member.
@@ -87,7 +86,19 @@ public class RegularMember extends GymMember {
         this.price = newPrice;
         return "Plan upgraded successfully to " + newPlan;
     }
-
+    
+    /**
+     * Method to reset a regular member deatils upon removal.
+     * @param removalReason contains the reason for removal of the member from the system.
+     */
+    public void revertRegularMember(String removalReason) {
+        super.resetMember();
+        this.isEligibleForUpgrade = false;
+        this.plan = "basic";
+        this.price = 6500;
+        this.removalReason = removalReason;
+    }
+    
     /**
      * Method overrides parent class to display the details of members including plan and price.
      * It also display if removal reason exists.
@@ -100,8 +111,4 @@ public class RegularMember extends GymMember {
             System.out.println("Removal Reason: " + removalReason);
         }
     }
-
-
-    
-   
 }
