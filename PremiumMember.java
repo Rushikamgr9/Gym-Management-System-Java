@@ -111,4 +111,21 @@ public class PremiumMember extends GymMember {
             System.out.println("Discount applied: " + discountAmount);
         }
     }
+    
+    /**
+     * Method to reset details for a premium member to default values.
+     * This method reverts the premium member by:
+     * -Resetting common attributes using the superclass method.
+     * -Clearing the personal trainer's name.
+     * -Marking the payment as not completed.
+     * -Resetting the paid amount and discount amount to zero.
+     * 
+     */
+    public void revertPremiumMember() {
+        super.resetMember();
+        this.personalTrainer = "";
+        this.isFullPayment = false;
+        this.paidAmount = 0;
+        this.discountAmount = 0;
+    }
 }
