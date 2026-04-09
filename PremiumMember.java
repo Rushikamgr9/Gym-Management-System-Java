@@ -81,7 +81,7 @@ public class PremiumMember extends GymMember {
             loyaltyPoints += 10;
         }
     }
-
+    
     /**
      * Method to pay due amount for a premium membership fee.
      * @param amount contains the amount being paid.
@@ -111,7 +111,7 @@ public class PremiumMember extends GymMember {
             System.out.println("Discount applied: " + discountAmount);
         }
     }
-
+    
     /**
      * Method to reset details for a premium member to default values.
      * This method reverts the premium member by:
