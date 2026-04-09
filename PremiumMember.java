@@ -111,7 +111,7 @@ public class PremiumMember extends GymMember {
             System.out.println("Discount applied: " + discountAmount);
         }
     }
-    
+
     /**
      * Method to reset details for a premium member to default values.
      * This method reverts the premium member by:
@@ -127,5 +127,20 @@ public class PremiumMember extends GymMember {
         this.isFullPayment = false;
         this.paidAmount = 0;
         this.discountAmount = 0;
+    }
+    
+    /**
+     * Method overrides the parent class to display the details of members including personal trainer's name, paid amount, full payment status,
+     * remaining amount and discount amount.
+     */
+    @Override
+    public void display() {
+        super.display();
+        System.out.println("Personal Trainer: " + personalTrainer);
+        System.out.println("Paid Amount: " + paidAmount + ", Is Full Payment: " + isFullPayment);
+        System.out.println("Remaining Amount: " + (premiumCharge - paidAmount));
+        if (isFullPayment) {
+            System.out.println("Discount Amount: " + discountAmount);
+        }
     }
 }
