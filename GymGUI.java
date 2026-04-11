@@ -126,8 +126,26 @@ public class GymGUI extends JFrame {
         add(new JLabel("Premium Price:")); add(premiumPriceField);
         add(new JLabel("Discount Amount:")); add(discountField);
         add(new JLabel("Plan (Regular Only):")); add(planBox);
+    
+        // Buttons
+        JButton addRegularBtn = new JButton("Add Regular Member");
+        JButton addPremiumBtn = new JButton("Add Premium Member");
+        JButton activateBtn = new JButton("Activate Membership");
+        JButton deactivateBtn = new JButton("Deactivate Membership");
+        JButton markAttendanceBtn = new JButton("Mark Attendance");
+        JButton upgradePlanBtn = new JButton("Upgrade Plan");
+        JButton calculateDiscountBtn = new JButton("Calculate Discount");
+        JButton revertRegularBtn = new JButton("Revert Regular Member");
+        JButton revertPremiumBtn = new JButton("Revert Premium Member");
+        JButton payDueBtn = new JButton("Pay Due Amount");
+        JButton displayBtn = new JButton("Display Members");
+        JButton clearBtn = new JButton("Clear Fields");
+        JButton saveToFileBtn = new JButton("Save to File");
+        JButton readFromFileBtn = new JButton("Read from File");
+
     }
-        /**
+
+    /**
      * Runs the array of string representation of numbers within a given range.
      * 
      * @param int start includes starting number.
