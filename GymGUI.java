@@ -143,6 +143,45 @@ public class GymGUI extends JFrame {
         JButton saveToFileBtn = new JButton("Save to File");
         JButton readFromFileBtn = new JButton("Read from File");
 
+        /**
+         * Adds action listeners to all buttons in the Gym Management System GUI.
+         * Each listener defines the operation to be performed when the corresponding button is clicked.
+         * 
+         * The functionalities handled include:
+         * - Adding Regular and Premium members
+         * - Activating and deactivating memberships
+         * - Marking attendance for members
+         * - Upgrading membership plans
+         * - Calculating discounts for premium members
+         * - Reverting member details upon removal
+         * - Paying dues for premium members
+         * - Displaying all members
+         * - Clearing form fields
+         * - Saving and reading member data to/from a file
+         * 
+         * This setup ensures all user interactions via buttons are appropriately handled
+         * and delegated to the corresponding methods in the application.
+         */
+        addRegularBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addRegularMember();
+            }
+        });
+        
+        addPremiumBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                addPremiumMember();
+            }
+        });
+
+        // Add buttons to the GUI layout
+        add(addRegularBtn);
+        add(addPremiumBtn);
+
+
+        
     }
 
     /**
@@ -157,4 +196,93 @@ public class GymGUI extends JFrame {
         for (int i = 0; i < items.length; i++) items[i] = String.valueOf(start + i);
         return items;
     }
+
+    /**
+     * Adds new regular member to the gym member list.
+     * This method checks all the required input fields which are filled are valid or not.
+     * Adds the provided details to the member list if the ID is unique.
+     * If the Id already exits or the paid amount is invalid then error message is displayed.
+     */
+    private void addRegularMember() {
+        if (idField.getText().trim().isEmpty() || nameField.getText().trim().isEmpty() ||
+            locationField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty() ||
+            emailField.getText().trim().isEmpty() || paidField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all the required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int id = Integer.parseInt(idField.getText().trim()); 
+        if (memberExists(id)) {
+            JOptionPane.showMessageDialog(this, "Member ID already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            String name = nameField.getText().trim();
+            String location = locationField.getText().trim();
+            String phone = phoneField.getText().trim();
+            String email = emailField.getText().trim();
+            String referral = referralField.getText().trim();
+            double paidAmount = Double.parseDouble(paidField.getText().trim());
+            String gender = maleRadio.isSelected() ? "Male" : "Female";
+            String dob = dobYear.getSelectedItem() + "-" + dobMonth.getSelectedItem() + "-" + dobDay.getSelectedItem();
+            String msDate = msYear.getSelectedItem() + "-" + msMonth.getSelectedItem() + "-" + msDay.getSelectedItem();
+            String plan = planBox.getSelectedItem().toString();
+
+            RegularMember rm = new RegularMember(id, name, location, phone, email, gender, dob, msDate, referral, plan, paidAmount);
+            members.add(rm);
+
+            JOptionPane.showMessageDialog(this, "Regular Member is added!");
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Enter a valid paid amount!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Adds new premium member to the gym member list.
+     * This method checks all the required input fields which are filled are valid or not.
+     * If the Id already exits or exception during member creation then error message is displayed.
+     */
+    private void addPremiumMember() {
+        if (idField.getText().trim().isEmpty() || nameField.getText().trim().isEmpty() ||
+            locationField.getText().trim().isEmpty() || phoneField.getText().trim().isEmpty() ||
+            emailField.getText().trim().isEmpty() || trainerField.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all the required fields.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int id = Integer.parseInt(idField.getText().trim());
+        if (memberExists(id)) {
+            JOptionPane.showMessageDialog(this, "Member ID already exists!", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        try {
+            String name = nameField.getText().trim();
+            String location = locationField.getText().trim();
+            String phone = phoneField.getText().trim();
+            String email = emailField.getText().trim();
+            String trainer = trainerField.getText().trim();
+            String gender = maleRadio.isSelected() ? "Male" : "Female";
+            String dob = dobYear.getSelectedItem() + "-" + dobMonth.getSelectedItem() + "-" + dobDay.getSelectedItem();
+            String msDate = msYear.getSelectedItem() + "-" + msMonth.getSelectedItem() + "-" + msDay.getSelectedItem();
+
+            PremiumMember pm = new PremiumMember(id, name, location, phone, email, gender, dob, msDate, trainer);
+            members.add(pm);
+
+            JOptionPane.showMessageDialog(this, "Premium Member is added!");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error adding Premium Member!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * It checks a gym member with the given ID already exists in the gym member list.
+     * This method iterates by the list of gym members.
+     * @param id includes the id of gym member to check.
+     * @return true if a ID matches,otherwise return false. 
+     */
+    private boolean memberExists(int id) {
+        for (GymMember m : members) {
+            if (m.getId()==(id)) return true;
+        }
+        return false;
+    }
+
 }
