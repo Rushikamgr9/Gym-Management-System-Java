@@ -176,9 +176,27 @@ public class GymGUI extends JFrame {
             }
         });
 
+        activateBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                activateMembership();
+            }
+        });
+
+        deactivateBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                deactivateMembership();
+            }
+        });
+
+
+
         // Add buttons to the GUI layout
         add(addRegularBtn);
         add(addPremiumBtn);
+        add(activateBtn); 
+        add(deactivateBtn);
 
 
         
@@ -270,6 +288,77 @@ public class GymGUI extends JFrame {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Error adding Premium Member!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    /**
+     * Activates the membership of a gym member.
+     * This method asks the user to input a valid ID number through the dialog box.
+     * It checks the input, changes into integer and searches for the corresponding member.
+     * Call the method to activate the membership if the member is found or error message is displayed.
+     */
+    private void activateMembership(){
+        String input = JOptionPane.showInputDialog(this, "Enter the Member ID to Activate:");
+        if (input == null || input.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You must enter a valid Member ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int id;
+        try {
+            id = Integer.parseInt(input.trim());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid Member ID! Please enter a valid ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        GymMember member = getMemberById(id);
+        if (member == null) {
+            JOptionPane.showMessageDialog(this, "Member ID is not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            member.activateMembership();
+            JOptionPane.showMessageDialog(this, "Membership Activated for Member ID: " + id);
+        }
+    }
+    
+    /**
+     * Deactivates the membership of gym member.
+     * This method asks the user to input a valid ID number through the dialog box.
+     * It checks the input, changes into integer and searches for the corresponding member.
+     * Call the method to deactivate the membership if the member is found or error message is displayed.
+     */
+    private void deactivateMembership() {
+        String input = JOptionPane.showInputDialog(this, "Enter the Member ID to Deactivate:");
+        if (input == null || input.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You must enter a valid Member ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int id;
+        try {
+            id = Integer.parseInt(input.trim());
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(this, "Invalid Member ID! Please enter a valid ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        GymMember member = getMemberById(id);
+        if (member == null) {
+            JOptionPane.showMessageDialog(this, "Member ID is not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            member.deactivateMembership();
+            JOptionPane.showMessageDialog(this, "Membership Deactivated for Member ID: " + id);
+        }
+    }
+
+    /**
+     * It searches for a gym member by thier ID.
+     * This method iterates by the list of gym members and returns member whose ID matches the given parameter.
+     * @param id includes the id of a gym member to check.
+     * @return m returns object with matching id or null returns if not found.
+     */
+    private GymMember getMemberById(int id) {
+        for (GymMember m : members) {
+            if (m.getId()==(id)) {
+                return m;
+            }
+        }
+        return null; 
     }
 
     /**
