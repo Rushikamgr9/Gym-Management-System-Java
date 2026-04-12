@@ -189,6 +189,14 @@ public class GymGUI extends JFrame {
                 deactivateMembership();
             }
         });
+        
+        markAttendanceBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                markAttendance();
+            }
+        });
+
 
 
 
@@ -197,6 +205,7 @@ public class GymGUI extends JFrame {
         add(addPremiumBtn);
         add(activateBtn); 
         add(deactivateBtn);
+        add(markAttendanceBtn); 
 
 
         
@@ -343,6 +352,28 @@ public class GymGUI extends JFrame {
         } else {
             member.deactivateMembership();
             JOptionPane.showMessageDialog(this, "Membership Deactivated for Member ID: " + id);
+        }
+    }
+
+    /**
+     * Marks the attendance for a gym member.
+     * This method asks the user to input a valid ID number through the dialog box.
+     * It checks the input, it's not empty and changes into integer and then searches for the corresponding member.
+     * Call the method to mark the attendance of the member, if the member is found else error message is displayed.
+     */
+    private void markAttendance() {
+        String idInput = JOptionPane.showInputDialog(this, "Enter Member ID to Mark Attendance:");
+        if (idInput == null || idInput.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "You must enter a valid Member ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        int id = Integer.parseInt(idInput.trim());
+        GymMember member = getMemberById(id);
+        if (member == null) {
+            JOptionPane.showMessageDialog(this, "Member ID is not found!", "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            member.markAttendance();
+            JOptionPane.showMessageDialog(this, "Attendance marked for Member ID: " + id);
         }
     }
 
