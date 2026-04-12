@@ -197,6 +197,13 @@ public class GymGUI extends JFrame {
             }
         });
 
+        upgradePlanBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                upgradePlan();
+            }
+        });
+
 
 
 
@@ -206,6 +213,7 @@ public class GymGUI extends JFrame {
         add(activateBtn); 
         add(deactivateBtn);
         add(markAttendanceBtn); 
+        add(upgradePlanBtn);
 
 
         
@@ -374,6 +382,60 @@ public class GymGUI extends JFrame {
         } else {
             member.markAttendance();
             JOptionPane.showMessageDialog(this, "Attendance marked for Member ID: " + id);
+        }
+    }
+
+    /**
+     * Manages the upgrade of a regular member's plan.
+     * 
+     * This method prompts the user to input a member ID, validates it, and checks if the corresponding
+     * member exists, is a regular member, and has an active membership. If all checks pass, it retrieves
+     * the new plan selected from the combo box and upgrades the member's plan accordingly using the
+     * {@code upgradePlan} method of the {@code RegularMember} class.
+     * 
+     * Feedback and error messages are shown using dialog boxes for the following cases:
+     * - Empty or invalid ID input
+     * - Member not found
+     * - Member is not a regular member
+     * - Membership is not active
+     * - Plan upgrade result
+     */
+    private void upgradePlan() {
+        String idInput = JOptionPane.showInputDialog(GymGUI.this, "Enter Member ID to Upgrade Plan:");
+        
+        if (idInput == null || idInput.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(GymGUI.this, "Please enter a valid Member ID.", "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
+        try {
+            int id = Integer.parseInt(idInput.trim());
+            GymMember member = getMemberById(id);
+            
+            if (member == null) {
+                JOptionPane.showMessageDialog(GymGUI.this, "Member ID not found!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (!(member instanceof RegularMember)) {
+                JOptionPane.showMessageDialog(GymGUI.this, "Only regular members can upgrade plans!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            if (!member.activeStatus) {
+                JOptionPane.showMessageDialog(GymGUI.this, "Member must be active to upgrade plan!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            String newPlan = planBox.getSelectedItem().toString();
+            
+            RegularMember regularMember = (RegularMember) member;
+            String result = regularMember.upgradePlan(newPlan);
+            
+            JOptionPane.showMessageDialog(GymGUI.this, result);
+            
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(GymGUI.this, "Invalid Member ID format!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
