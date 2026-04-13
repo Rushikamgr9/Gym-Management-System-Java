@@ -204,7 +204,12 @@ public class GymGUI extends JFrame {
             }
         });
 
+        calculateDiscountBtn.addActionListener(new ActionListener() {
 
+            public void actionPerformed(ActionEvent e) {
+                calculateDiscount();
+            }
+        });
 
 
         // Add buttons to the GUI layout
@@ -214,8 +219,11 @@ public class GymGUI extends JFrame {
         add(deactivateBtn);
         add(markAttendanceBtn); 
         add(upgradePlanBtn);
+        add(calculateDiscountBtn); 
 
 
+        // Display the GUI
+        setVisible(true);
         
     }
 
@@ -436,6 +444,91 @@ public class GymGUI extends JFrame {
             
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(GymGUI.this, "Invalid Member ID format!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Handles the discount calculation for a premium member in the gym management system.
+     * 
+     * This method prompts the user to enter a member ID and verifies the following:
+     *  - The input is not empty or invalid.
+     *  - The member exists in the system.
+     *  - The member is an instance of {@code PremiumMember}.
+     *  - The member has completed full payment for the premium membership.
+     *
+     * If all conditions are satisfied, a 10% discount is applied to the premium charge,
+     * and the discount amount is displayed to the user via a dialog box.
+     * 
+     * Validation and exception handling ensure smooth user experience and prevent misuse.
+     */
+    private void calculateDiscount() {
+        String idInput = JOptionPane.showInputDialog(
+            GymGUI.this, 
+            "Enter Premium Member ID to Calculate Discount:"
+        );
+
+        if (idInput == null || idInput.trim().isEmpty()) {
+            JOptionPane.showMessageDialog(
+                GymGUI.this, 
+                "Please enter a valid Member ID.", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE
+            );
+            return;
+        }
+
+        try {
+            int id = Integer.parseInt(idInput.trim());
+            GymMember member = getMemberById(id);
+
+            if (member == null) {
+                JOptionPane.showMessageDialog(
+                    GymGUI.this, 
+                    "Member ID not found!", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            if (!(member instanceof PremiumMember)) {
+                JOptionPane.showMessageDialog(
+                    GymGUI.this, 
+                    "Only Premium Members are eligible for discounts!", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            PremiumMember premiumMember = (PremiumMember) member;
+
+            if (!premiumMember.isPaymentComplete()) {
+                JOptionPane.showMessageDialog(
+                    GymGUI.this, 
+                    "Discount can only be applied after full payment is made!", 
+                    "Error", 
+                    JOptionPane.ERROR_MESSAGE
+                );
+                return;
+            }
+
+            premiumMember.calculateDiscount();
+
+            JOptionPane.showMessageDialog(
+                GymGUI.this, 
+                "Discount Applied: " + premiumMember.getDiscountAmount(), 
+                "Discount Calculated", 
+                JOptionPane.INFORMATION_MESSAGE
+            );
+
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(
+                GymGUI.this, 
+                "Invalid Member ID format! Please enter a number.", 
+                "Error", 
+                JOptionPane.ERROR_MESSAGE
+            );
         }
     }
 
