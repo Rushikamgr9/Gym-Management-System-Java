@@ -211,6 +211,13 @@ public class GymGUI extends JFrame {
             }
         });
 
+        revertRegularBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                revertRegularMember();
+            }
+        });
+
 
         // Add buttons to the GUI layout
         add(addRegularBtn);
@@ -220,7 +227,7 @@ public class GymGUI extends JFrame {
         add(markAttendanceBtn); 
         add(upgradePlanBtn);
         add(calculateDiscountBtn); 
-
+        add(revertRegularBtn);
 
         // Display the GUI
         setVisible(true);
@@ -529,6 +536,52 @@ public class GymGUI extends JFrame {
                 "Error", 
                 JOptionPane.ERROR_MESSAGE
             );
+        }
+    }
+
+    /**
+     * Reverts a regular member's status based on a given removal reason.
+     * 
+     * This method prompts the user to enter a Member ID and verifies:
+     *  - The input is not empty or invalid.
+     *  - The member exists in the system.
+     *  - The member is an instance of {@code RegularMember}.
+     *  
+     * If valid, it prompts the user to enter a removal reason and calls
+     * the {@code revertRegularMember(String reason)} method on the {@code RegularMember} instance.
+     * A success message is shown upon successful reversion.
+     * 
+     * Proper validation and error dialogs are used to handle invalid inputs and user cancellations.
+     */
+    private void revertRegularMember() {
+        // Get Member ID
+        String idInput = JOptionPane.showInputDialog("Enter Regular Member ID to revert:");
+        if (idInput == null || idInput.isEmpty()) return;
+        
+        try {
+            int memberId = Integer.parseInt(idInput);
+            GymMember member = getMemberById(memberId);
+            
+            if (member == null) {
+                JOptionPane.showMessageDialog(null, "Member not found!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!(member instanceof RegularMember)) {
+                JOptionPane.showMessageDialog(null, "Only regular members can be reverted!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+   
+            String reason = JOptionPane.showInputDialog("Enter removal reason:");
+            if (reason == null || reason.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Reason required!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+    
+            ((RegularMember)member).revertRegularMember(reason);
+            JOptionPane.showMessageDialog(null, "Member reverted successfully!");
+            
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Invalid ID!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
