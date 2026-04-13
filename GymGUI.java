@@ -232,6 +232,13 @@ public class GymGUI extends JFrame {
             }
         });
 
+        displayBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                displayMembers();
+            }
+        });
+
 
         // Add buttons to the GUI layout
         add(addRegularBtn);
@@ -244,6 +251,7 @@ public class GymGUI extends JFrame {
         add(revertRegularBtn);
         add(revertPremiumBtn); 
         add(payDueBtn);
+        add(displayBtn); 
 
         // Display the GUI
         setVisible(true);
@@ -685,6 +693,28 @@ public class GymGUI extends JFrame {
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Invalid number format!", "Error", JOptionPane.ERROR_MESSAGE);
         }
+    }
+
+    /**
+     * Displays the details of all the gym members in a new frame.
+     * This method creates new JFrame including text area for details of each gym member.
+     * It display the information of member by using getDetails() method.
+     * Display Frame is fixed size and non-editable.
+     */
+    private void displayMembers() {
+        JFrame displayFrame = new JFrame("Member List");
+        displayFrame.setLayout(new BorderLayout());
+        JTextArea displayArea = new JTextArea(20, 50);
+        displayArea.setEditable(false); 
+                for (GymMember member : members) {
+            displayArea.append(member.getDetails() + "\n\n");
+        }        
+
+        JScrollPane scrollPane = new JScrollPane(displayArea);
+        displayFrame.add(scrollPane, BorderLayout.CENTER);
+        displayFrame.setSize(600, 400);
+        displayFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        displayFrame.setVisible(true);
     }
 
     /**
