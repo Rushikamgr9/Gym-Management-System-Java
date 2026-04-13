@@ -239,6 +239,13 @@ public class GymGUI extends JFrame {
             }
         });
 
+        clearBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                clearFields();
+            }
+        });
+
 
         // Add buttons to the GUI layout
         add(addRegularBtn);
@@ -718,6 +725,36 @@ public class GymGUI extends JFrame {
         displayFrame.setSize(600, 400);
         displayFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         displayFrame.setVisible(true);
+    }
+
+    /**
+     * Clears all input fields in the GUI form.
+     * 
+     * This method resets all text fields to empty strings, clears the selected gender radio button,
+     * and resets all combo boxes (date of birth, membership start date, and plan selection) to their default values.
+     * It is typically used to clear the form after an operation or to prepare for new input.
+     * 
+     */
+    private void clearFields() {
+        idField.setText("");
+        nameField.setText("");
+        locationField.setText("");
+        phoneField.setText("");
+        emailField.setText("");
+        referralField.setText("");
+        paidField.setText("");
+        removalReasonField.setText("");
+        trainerField.setText("");
+    
+        genderGroup.clearSelection();
+    
+        dobYear.setSelectedIndex(0);
+        dobMonth.setSelectedIndex(0);
+        dobDay.setSelectedIndex(0);
+        msYear.setSelectedIndex(0);
+        msMonth.setSelectedIndex(0);
+        msDay.setSelectedIndex(0);
+        planBox.setSelectedIndex(0);
     }
 
     /**
