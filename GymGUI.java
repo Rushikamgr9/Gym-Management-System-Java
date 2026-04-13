@@ -225,6 +225,13 @@ public class GymGUI extends JFrame {
             }
         });
 
+        payDueBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                payDueAmount();
+            }
+        });
+
 
         // Add buttons to the GUI layout
         add(addRegularBtn);
@@ -236,6 +243,7 @@ public class GymGUI extends JFrame {
         add(calculateDiscountBtn); 
         add(revertRegularBtn);
         add(revertPremiumBtn); 
+        add(payDueBtn);
 
         // Display the GUI
         setVisible(true);
@@ -629,6 +637,53 @@ public class GymGUI extends JFrame {
             
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Invalid ID!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Processes a payment towards the due amount for a premium member.
+     * 
+     * This method prompts the user to enter:
+     * - The Premium Member ID
+     * - The amount to pay
+     *
+     * It validates the inputs, checks that the member exists and is a {@code PremiumMember},
+     * and then applies the payment by calling {@code payDueAmount} on the member object.
+     * The result of the payment is displayed in a message dialog.
+     * 
+     * If inputs are invalid, or the member does not exist or is not premium,
+     * appropriate error messages are shown.
+     * 
+     */
+    private void payDueAmount() {
+        String idInput = JOptionPane.showInputDialog("Enter Premium Member ID:");
+        if (idInput == null || idInput.isEmpty()) return;
+        
+        // Get Payment Amount
+        String amountInput = JOptionPane.showInputDialog("Enter Amount to Pay:");
+        if (amountInput == null || amountInput.isEmpty()) return;
+        
+        try {
+            int memberId = Integer.parseInt(idInput);
+            double amount = Double.parseDouble(amountInput);
+            GymMember member = getMemberById(memberId);
+            
+            // Validate member
+            if (member == null) {
+                JOptionPane.showMessageDialog(null, "Member not found!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!(member instanceof PremiumMember)) {
+                JOptionPane.showMessageDialog(null, "Only premium members can make payments!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            
+            // Process payment
+            String result = ((PremiumMember)member).payDueAmount(amount);
+            JOptionPane.showMessageDialog(null, result);
+            
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Invalid number format!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
