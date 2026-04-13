@@ -252,6 +252,9 @@ public class GymGUI extends JFrame {
         add(revertPremiumBtn); 
         add(payDueBtn);
         add(displayBtn); 
+        add(clearBtn);
+        add(saveToFileBtn); 
+        add(readFromFileBtn);
 
         // Display the GUI
         setVisible(true);
