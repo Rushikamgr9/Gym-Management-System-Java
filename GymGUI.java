@@ -218,6 +218,13 @@ public class GymGUI extends JFrame {
             }
         });
 
+        revertPremiumBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                revertPremiumMember();
+            }
+        });
+
 
         // Add buttons to the GUI layout
         add(addRegularBtn);
@@ -228,6 +235,7 @@ public class GymGUI extends JFrame {
         add(upgradePlanBtn);
         add(calculateDiscountBtn); 
         add(revertRegularBtn);
+        add(revertPremiumBtn); 
 
         // Display the GUI
         setVisible(true);
@@ -579,6 +587,45 @@ public class GymGUI extends JFrame {
     
             ((RegularMember)member).revertRegularMember(reason);
             JOptionPane.showMessageDialog(null, "Member reverted successfully!");
+            
+        } catch (NumberFormatException ex) {
+            JOptionPane.showMessageDialog(null, "Invalid ID!", "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /**
+     * Reverts a premium member's details to default values.
+     * 
+     * This method prompts the user to enter a Premium Member ID and verifies:
+     *  - The input is not empty or invalid.
+     *  - The member exists in the system.
+     *  - The member is an instance of {@code PremiumMember}.
+     * 
+     * If valid, it calls the {@code revertPremiumMember()} method on the {@code PremiumMember} instance
+     * to reset the member's details, then shows a confirmation message.
+     * 
+     * Appropriate error dialogs are shown for invalid input, non-existent members,
+     * or if the member is not premium.
+     */
+    private void revertPremiumMember() {
+        String idInput = JOptionPane.showInputDialog("Enter Premium Member ID to revert:");
+        if (idInput == null || idInput.isEmpty()) return;
+        
+        try {
+            int memberId = Integer.parseInt(idInput);
+            GymMember member = getMemberById(memberId);
+         
+            if (member == null) {
+                JOptionPane.showMessageDialog(null, "Member not found!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            if (!(member instanceof PremiumMember)) {
+                JOptionPane.showMessageDialog(null, "Only premium members can be reverted!", "Error", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+   
+            ((PremiumMember)member).revertPremiumMember();
+            JOptionPane.showMessageDialog(null, "Premium member reverted successfully!");
             
         } catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(null, "Invalid ID!", "Error", JOptionPane.ERROR_MESSAGE);
