@@ -822,7 +822,52 @@ public class GymGUI extends JFrame {
             }
     }
 
-
+    /**
+     * Reads member details from the "MemberDetails.txt" file and displays them in a GUI table.
+     * 
+     * This method opens the file, skips the header line, then reads each subsequent line,
+     * splitting the data into columns based on two or more spaces to preserve formatting.
+     * The data is loaded into a JTable inside a JFrame for easy viewing.
+     * 
+     * If the file cannot be read or an error occurs, an error dialog will be shown to inform the user.
+     * 
+     */
+    private void readFromFile() {
+        JFrame displayFrame = new JFrame("Member Details");
+  
+        String[] columns = {
+            "ID", "Name", "Location", "Phone", "Email", "Start Date", "Plan", "Price",
+            "Attendance", "Loyalty Points", "Active", "Full Pay", "Discount", "Paid"
+        };
+  
+        DefaultTableModel model = new DefaultTableModel(columns, 0);
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+    
+        try (BufferedReader reader = new BufferedReader(new FileReader("MemberDetails.txt"))) {
+            String line;
+            boolean isFirstLine = true;
+            while ((line = reader.readLine()) != null) {
+ 
+                if (isFirstLine) {
+                isFirstLine = false;
+                continue;
+            }
+                
+                String[] data = line.split("\\s{2,}"); 
+                model.addRow(data);
+            }
+    
+            displayFrame.add(scrollPane);
+            displayFrame.pack();
+            displayFrame.setLocationRelativeTo(null);
+            displayFrame.setVisible(true);
+        } catch (IOException ex) {
+            JOptionPane.showMessageDialog(null,
+                    "Error reading file: " + ex.getMessage(),
+                    "Error", JOptionPane.ERROR_MESSAGE);
+        }
+    }
 
     /**
      * It searches for a gym member by thier ID.
