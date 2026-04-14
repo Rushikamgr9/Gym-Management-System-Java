@@ -246,6 +246,13 @@ public class GymGUI extends JFrame {
             }
         });
 
+        saveToFileBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                saveToFile();
+            }
+        });
+
 
         // Add buttons to the GUI layout
         add(addRegularBtn);
@@ -756,6 +763,66 @@ public class GymGUI extends JFrame {
         msDay.setSelectedIndex(0);
         planBox.setSelectedIndex(0);
     }
+
+    /**
+     * Saves the details of all gym members to a text file named "MemberDetails.txt".
+     * 
+     * The method writes a formatted header line followed by the details of each member,
+     * including ID, name, contact info, membership start date, plan type, pricing, attendance,
+     * loyalty points, active status, payment completion status, discount, and amount paid.
+     * For PremiumMembers, specific premium-related fields such as premium charge, payment completion,
+     * discount amount, and paid amount are included; for RegularMembers, these fields show default or "N/A" values.
+     * 
+     * On successful save, a confirmation dialog is shown. If an error occurs during writing,
+     * an error dialog with the exception message is displayed.
+     * 
+     */
+    private void saveToFile() {
+            try (PrintWriter writer = new PrintWriter("MemberDetails.txt")) {
+            writer.println(String.format("%-5s %-15s %-15s %-15s %-25s %-20s %-10s %-10s %-10s %-15s %-10s %-15s %-15s %-15s",
+                "ID", "Name", "Location", "Phone", "Email", "Start Date", "Plan", "Price",
+                "Attendance", "Loyalty Points", "Active", "Full Pay", "Discount", "Paid"));
+    
+            for (GymMember member : members) {
+                String plan = "Regular";
+                String price = "6500.00";
+                String fullPay = "N/A";
+                String discount = "N/A";
+                String paid = "N/A";
+    
+                if (member instanceof PremiumMember) {
+                    PremiumMember pm = (PremiumMember) member;
+                    plan = "Premium";
+                    price = String.format("%.2f", pm.getPremiumCharge());  
+                    fullPay = String.valueOf(pm.isPaymentComplete());
+                    discount = String.format("%.2f", pm.getDiscountAmount());
+                    paid = String.format("%.2f", pm.getPaidAmount());
+                }
+    
+                writer.println(String.format("%-5d %-15s %-15s %-15s %-25s %-20s %-10s %-10s %-10d %-15.2f %-10s %-15s %-15s %-15s",
+                    member.id,
+                    member.name,
+                    member.location,
+                    member.phone,
+                    member.email,
+                    member.membershipStartDate,
+                    plan,
+                    price,
+                    member.attendance,
+                    member.loyaltyPoints,
+                    member.activeStatus,
+                    fullPay,
+                    discount,
+                    paid));
+            }
+            JOptionPane.showMessageDialog(null, "Saved all members to MemberDetails.txt");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error saving file: " + ex.getMessage(), 
+                "Error", JOptionPane.ERROR_MESSAGE);
+            }
+    }
+
+
 
     /**
      * It searches for a gym member by thier ID.
