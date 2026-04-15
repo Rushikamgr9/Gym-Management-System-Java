@@ -253,6 +253,13 @@ public class GymGUI extends JFrame {
             }
         });
 
+        readFromFileBtn.addActionListener(new ActionListener() {
+
+            public void actionPerformed(ActionEvent e) {
+                readFromFile();
+            }
+        });
+
 
         // Add buttons to the GUI layout
         add(addRegularBtn);
