@@ -904,4 +904,11 @@ public class GymGUI extends JFrame {
         return false;
     }
 
+    /**
+     * Main method of GUI application.
+     */
+    public static void main(String[] args) {
+        new GymGUI();
+    }
+
 }
