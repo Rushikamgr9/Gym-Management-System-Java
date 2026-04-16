@@ -35,7 +35,7 @@ public class GymGUI extends JFrame {
     private JComboBox<String> dobYear, dobMonth, dobDay;
     private JComboBox<String> msYear, msMonth, msDay;
     private JComboBox<String> planBox;
-
+    
     /**
      * Constructor for the GymGUI class.
      * 
@@ -126,7 +126,7 @@ public class GymGUI extends JFrame {
         add(new JLabel("Premium Price:")); add(premiumPriceField);
         add(new JLabel("Discount Amount:")); add(discountField);
         add(new JLabel("Plan (Regular Only):")); add(planBox);
-    
+
         // Buttons
         JButton addRegularBtn = new JButton("Add Regular Member");
         JButton addPremiumBtn = new JButton("Add Premium Member");
@@ -189,7 +189,7 @@ public class GymGUI extends JFrame {
                 deactivateMembership();
             }
         });
-        
+
         markAttendanceBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
@@ -203,64 +203,64 @@ public class GymGUI extends JFrame {
                 upgradePlan();
             }
         });
-
+        
         calculateDiscountBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 calculateDiscount();
             }
         });
-
+        
         revertRegularBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 revertRegularMember();
             }
         });
-
+        
         revertPremiumBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 revertPremiumMember();
             }
         });
-
+        
         payDueBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 payDueAmount();
             }
         });
-
+        
         displayBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 displayMembers();
             }
         });
-
+        
         clearBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 clearFields();
             }
         });
-
+        
         saveToFileBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 saveToFile();
             }
         });
-
+        
         readFromFileBtn.addActionListener(new ActionListener() {
 
             public void actionPerformed(ActionEvent e) {
                 readFromFile();
             }
         });
-
-
+        
+        
         // Add buttons to the GUI layout
         add(addRegularBtn);
         add(addPremiumBtn);
@@ -279,7 +279,6 @@ public class GymGUI extends JFrame {
 
         // Display the GUI
         setVisible(true);
-        
     }
 
     /**
@@ -369,7 +368,7 @@ public class GymGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Error adding Premium Member!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Activates the membership of a gym member.
      * This method asks the user to input a valid ID number through the dialog box.
@@ -425,7 +424,7 @@ public class GymGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Membership Deactivated for Member ID: " + id);
         }
     }
-
+    
     /**
      * Marks the attendance for a gym member.
      * This method asks the user to input a valid ID number through the dialog box.
@@ -447,7 +446,7 @@ public class GymGUI extends JFrame {
             JOptionPane.showMessageDialog(this, "Attendance marked for Member ID: " + id);
         }
     }
-
+    
     /**
      * Manages the upgrade of a regular member's plan.
      * 
@@ -586,7 +585,7 @@ public class GymGUI extends JFrame {
             );
         }
     }
-
+    
     /**
      * Reverts a regular member's status based on a given removal reason.
      * 
@@ -632,7 +631,7 @@ public class GymGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Invalid ID!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Reverts a premium member's details to default values.
      * 
@@ -671,7 +670,7 @@ public class GymGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Invalid ID!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Processes a payment towards the due amount for a premium member.
      * 
@@ -718,7 +717,7 @@ public class GymGUI extends JFrame {
             JOptionPane.showMessageDialog(null, "Invalid number format!", "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * Displays the details of all the gym members in a new frame.
      * This method creates new JFrame including text area for details of each gym member.
@@ -740,7 +739,7 @@ public class GymGUI extends JFrame {
         displayFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         displayFrame.setVisible(true);
     }
-
+    
     /**
      * Clears all input fields in the GUI form.
      * 
@@ -770,7 +769,7 @@ public class GymGUI extends JFrame {
         msDay.setSelectedIndex(0);
         planBox.setSelectedIndex(0);
     }
-
+    
     /**
      * Saves the details of all gym members to a text file named "MemberDetails.txt".
      * 
@@ -828,7 +827,7 @@ public class GymGUI extends JFrame {
                 "Error", JOptionPane.ERROR_MESSAGE);
             }
     }
-
+    
     /**
      * Reads member details from the "MemberDetails.txt" file and displays them in a GUI table.
      * 
@@ -875,7 +874,7 @@ public class GymGUI extends JFrame {
                     "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
-
+    
     /**
      * It searches for a gym member by thier ID.
      * This method iterates by the list of gym members and returns member whose ID matches the given parameter.
@@ -890,7 +889,7 @@ public class GymGUI extends JFrame {
         }
         return null; 
     }
-
+    
     /**
      * It checks a gym member with the given ID already exists in the gym member list.
      * This method iterates by the list of gym members.
@@ -903,12 +902,11 @@ public class GymGUI extends JFrame {
         }
         return false;
     }
-
+   
     /**
      * Main method of GUI application.
      */
     public static void main(String[] args) {
         new GymGUI();
     }
-
 }
